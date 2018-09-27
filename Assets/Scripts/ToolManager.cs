@@ -20,7 +20,7 @@ public class ToolManager : MonoBehaviour {
 
 
 #elif UNITY_ANDROID || UNITY_IOS
-    public bool isGripped;
+    [System.NonSerialized] public bool isGripped;
 	#endif
 
 	public static GameObject curSelGameObject;

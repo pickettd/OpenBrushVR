@@ -55,7 +55,7 @@ public class BrushManager : MonoBehaviour {
 		CylindarBrushtoggle ();
 	
 		flatbrushtoggle ();
-		CylindarBrushtoggle ();
+		//CylindarBrushtoggle ();
 		cursor.transform.localScale = new Vector3 (cursorsize, cursorsize, cursorsize);
 	}
 	

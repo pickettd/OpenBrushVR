@@ -1,5 +1,5 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
+// UNITY_SHADER_NO_UPGRADE
 Shader "Custom/SteamVR_SphericalProjection" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
@@ -34,7 +34,11 @@ Shader "Custom/SteamVR_SphericalProjection" {
 
 	v2f vert(appdata_base v) {
 		v2f o;
+#if UNITY_VERSION >= 540
 		o.pos = UnityObjectToClipPos(v.vertex);
+#else
+		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+#endif
 		o.tex = float2(
 			lerp(_Phi0, _Phi1, v.texcoord.x),
 			lerp(_Theta0, _Theta1, v.texcoord.y));

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/ARKIT_IOSpORTRAIT.unity
+- path: Assets/OpenBrush_Daydream_VR.unity
   isLoaded: 1
   isActive: 1

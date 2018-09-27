@@ -11,44 +11,6 @@ using Valve.VR;
 
 public static class SteamVR_Utils
 {
-	public class Event
-	{
-		public delegate void Handler(params object[] args);
-
-		public static void Listen(string message, Handler action)
-		{
-			var actions = listeners[message] as Handler;
-			if (actions != null)
-			{
-				listeners[message] = actions + action;
-			}
-			else
-			{
-				listeners[message] = action;
-			}
-		}
-
-		public static void Remove(string message, Handler action)
-		{
-			var actions = listeners[message] as Handler;
-			if (actions != null)
-			{
-				listeners[message] = actions - action;
-			}
-		}
-
-		public static void Send(string message, params object[] args)
-		{
-			var actions = listeners[message] as Handler;
-			if (actions != null)
-			{
-				actions(args);
-			}
-		}
-
-		private static Hashtable listeners = new Hashtable();
-	}
-
 	// this version does not clamp [0..1]
 	public static Quaternion Slerp(Quaternion A, Quaternion B, float t)
 	{
@@ -395,7 +357,7 @@ public static class SteamVR_Utils
 		if (initOpenVR)
 		{
 			var error = EVRInitError.None;
-			OpenVR.Init(ref error, EVRApplicationType.VRApplication_Other);
+			OpenVR.Init(ref error, EVRApplicationType.VRApplication_Utility);
 		}
 
 		var system = OpenVR.System;
@@ -477,12 +439,11 @@ public static class SteamVR_Utils
 		camera.aspect = oldAspect;
 		camera.stereoTargetEye = StereoTargetEyeMask.None;
 
-        // Render sections of a sphere using a rectilinear projection
-        // and resample using a sphereical projection into a single panorama
-        // texture per eye.  We break into sections in order to keep the eye
-        // separation similar around the sphere.  Rendering alternates between
-        // top and bottom sections, sweeping 
-      //  ly around the sphere,
+		// Render sections of a sphere using a rectilinear projection
+		// and resample using a sphereical projection into a single panorama
+		// texture per eye.  We break into sections in order to keep the eye
+		// separation similar around the sphere.  Rendering alternates between
+		// top and bottom sections, sweeping horizontally around the sphere,
 		// alternating left and right eyes.
 		for (int v = 0; v < vTotal; v++)
 		{

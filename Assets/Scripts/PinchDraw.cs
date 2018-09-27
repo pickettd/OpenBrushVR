@@ -37,7 +37,7 @@ using System.Collections.Generic;
 	public GameObject con;
 #elif UNITY_ANDROID || UNITY_IOS
 
-    public bool tangoIspainting;
+    [System.NonSerialized] public bool tangoIspainting;
 
 
 	#endif
