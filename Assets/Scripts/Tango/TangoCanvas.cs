@@ -7,17 +7,21 @@ public class TangoCanvas : MonoBehaviour {
 	public GameObject BrushM;
 	public GameObject SettingsM;
     public GameObject onScreenController;
-    public bool isHidden = false;
+    public GameObject GVRVisual;
+    public GameObject GVRLaser;
+    public bool isMenuHidden = false;
     
     private BrushManager brushScript;
     private PinchDraw pinchScript;
     private dLineManager dLineScript;
+    private Canvas entireCanvas;
 
 	// Use this for initialization
 	void Start () {
         brushScript = (BrushManager) BrushM.GetComponentInParent(typeof(BrushManager));
 	    pinchScript = (PinchDraw) onScreenController.GetComponent(typeof(PinchDraw));
         dLineScript = (dLineManager) onScreenController.GetComponent(typeof(dLineManager));
+        entireCanvas = (Canvas)GetComponent(typeof(Canvas));
         
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Brushson();
@@ -37,17 +41,19 @@ public class TangoCanvas : MonoBehaviour {
         if (GvrControllerInput.AppButtonDown)
         {
             print("Click App button down");
-            hideAll();
+            toggleEntireCanvas();
         }
 
-        if (GvrControllerInput.ClickButtonDown)
+        // Note that we're only going to be painting if the menu is hidden
+        if (isMenuHidden && GvrControllerInput.ClickButtonDown)
         { 
             print("Start click Touchpad");
             brushScript.PaintingStart();
             pinchScript.paintStart();
             dLineScript.painterStart();
         }
-        if (GvrControllerInput.ClickButtonUp)
+        // Note that we're only going to be painting if the menu is hidden
+        if (isMenuHidden && GvrControllerInput.ClickButtonUp)
         { 
             print("End click Touchpad");
             brushScript.PaintingEnd();
@@ -85,6 +91,9 @@ public class TangoCanvas : MonoBehaviour {
 
 		yield return new WaitForSeconds (.25f);
 		coloron ();
+        
+        yield return new WaitForSeconds (.25f);
+        toggleEntireCanvas();
 	}
 
 	public void settingon(){
@@ -113,24 +122,31 @@ public class TangoCanvas : MonoBehaviour {
 		ToolC.SetActive (false);
 	}
 	public void hideAll(){
-        if (isHidden)
+        BrushM.SetActive (false);
+        SettingsM.SetActive (false);
+        ToolC.SetActive (false);
+        ColorM.SetActive (false);
+	} 
+    public void toggleEntireCanvas(){
+        if (isMenuHidden)
         {
-            BrushM.SetActive (true);
-            SettingsM.SetActive (false);
-            ToolC.SetActive (false);
-            ColorM.SetActive (false);
-            isHidden = false;
+            entireCanvas.enabled = true;
+            // When the menu is shown, hide the painter and show the laser
+            onScreenController.SetActive(false);
+            GVRLaser.SetActive(true);
+            GVRVisual.SetActive(true);
+            isMenuHidden = false;
         }
         else
         {
-            ColorM.SetActive(false);
-            SettingsM.SetActive(false);
-            BrushM.SetActive(false);
-            ToolC.SetActive(false);
-            isHidden = true;
+            entireCanvas.enabled = false;
+            // When the menu is gone, show the painter and hide the laser
+            onScreenController.SetActive(true);
+            GVRLaser.SetActive(false);
+            GVRVisual.SetActive(false);
+            isMenuHidden = true;
         }
-	} 
-
+    }
 
 
 }
