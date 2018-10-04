@@ -22,4 +22,7 @@ public class playerPointer : MonoBehaviour
             print("Position Vector: " + GvrControllerInput.TouchPos);
         }*/
     }
+    public void clickedGreenButton() {
+        print("Clicked the big green button");
+    }
 }

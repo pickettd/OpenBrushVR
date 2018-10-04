@@ -6,10 +6,19 @@ public class TangoCanvas : MonoBehaviour {
 	public GameObject ToolC;
 	public GameObject BrushM;
 	public GameObject SettingsM;
+    public GameObject onScreenController;
+    public bool isHidden = false;
+    
+    private BrushManager brushScript;
+    private PinchDraw pinchScript;
+    private dLineManager dLineScript;
 
 	// Use this for initialization
 	void Start () {
-	
+        brushScript = (BrushManager) BrushM.GetComponentInParent(typeof(BrushManager));
+	    pinchScript = (PinchDraw) onScreenController.GetComponent(typeof(PinchDraw));
+        dLineScript = (dLineManager) onScreenController.GetComponent(typeof(dLineManager));
+        
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Brushson();
 
@@ -22,6 +31,35 @@ public class TangoCanvas : MonoBehaviour {
 	
 	
 	}
+    void Update ()
+    {
+        //if (GvrControllerInputDevice.GetButtonDown(GvrControllerButton.App))
+        if (GvrControllerInput.AppButtonDown)
+        {
+            print("Click App button down");
+            hideAll();
+        }
+
+        if (GvrControllerInput.ClickButtonDown)
+        { 
+            print("Start click Touchpad");
+            brushScript.PaintingStart();
+            pinchScript.paintStart();
+            dLineScript.painterStart();
+        }
+        if (GvrControllerInput.ClickButtonUp)
+        { 
+            print("End click Touchpad");
+            brushScript.PaintingEnd();
+            pinchScript.paintEnd();
+            dLineScript.painterEnd();
+        }
+
+        /*if (GvrControllerInput.IsTouching)
+        {
+            print("Position Vector: " + GvrControllerInput.TouchPos);
+        }*/
+    }
 	public void motionLevelLoad(){
 
 
@@ -48,10 +86,7 @@ public class TangoCanvas : MonoBehaviour {
 		yield return new WaitForSeconds (.25f);
 		coloron ();
 	}
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 	public void settingon(){
 		SettingsM.SetActive (true);
 		ToolC.SetActive (false);
@@ -78,10 +113,22 @@ public class TangoCanvas : MonoBehaviour {
 		ToolC.SetActive (false);
 	}
 	public void hideAll(){
-		ColorM.SetActive (false);
-		SettingsM.SetActive (false);
-		BrushM.SetActive (false);
-		ToolC.SetActive (false);
+        if (isHidden)
+        {
+            BrushM.SetActive (true);
+            SettingsM.SetActive (false);
+            ToolC.SetActive (false);
+            ColorM.SetActive (false);
+            isHidden = false;
+        }
+        else
+        {
+            ColorM.SetActive(false);
+            SettingsM.SetActive(false);
+            BrushM.SetActive(false);
+            ToolC.SetActive(false);
+            isHidden = true;
+        }
 	} 
 
 

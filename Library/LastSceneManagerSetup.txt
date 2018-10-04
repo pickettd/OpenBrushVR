@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/OpenBrush_Daydream_VR.unity
+- path: Assets/OpenBrush_Daydream3_VR.unity
   isLoaded: 1
   isActive: 1

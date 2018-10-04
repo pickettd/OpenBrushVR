@@ -187,11 +187,11 @@ using System.Collections.Generic;
       
     }
 
-	#if UNITY_ANDROID || UNITY_IOS
+	//#if UNITY_ANDROID || UNITY_IOS
 
 	public void paintStart(){
 		if (this.enabled == true) {
-		//	Debug.Log ("Paintingislit");
+			Debug.Log ("Paintingislit");
 			var drawState = _drawStates [0];
 			if (BrushManager.freeformbool == false) {
 				strokes = _drawStates [0].BeginNewLine () as GameObject;
@@ -241,7 +241,7 @@ using System.Collections.Generic;
 	}
 
 
-	#endif
+	//#endif
 	public void pointerbreaker(){
 		
 		var drawState = _drawStates[0];
