@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/OpenBrush_Daydream_VR.unity
+    path: Assets/OpenBrush_Backup_Daydream_VR.unity
     guid: 5fa77213ae44b49a0bb823f0c959d215
-  - enabled: 1
-    path: Assets/OpenBrush_Daydream2_VR.unity
+  - enabled: 0
+    path: Assets/OpenBrush_Daydream_VR.unity
     guid: 7ebcdfc6ad4c44c038a98cfd644377c3
+  - enabled: 1
+    path: Assets/Daydream_6dof_beta.unity
+    guid: 187cbe0b7cb574bf195525d7ecbcd56c
   m_configObjects: {}

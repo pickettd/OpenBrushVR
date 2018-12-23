@@ -25,6 +25,8 @@ public class TangoCanvas : MonoBehaviour {
         
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Brushson();
+        // Note this is a hack because I couldn't figure out where the code was reseting this transform elsewhere
+        //onScreenController.transform.parent.position = new Vector3(0,-1,0);
 
 
 
@@ -67,9 +69,9 @@ public class TangoCanvas : MonoBehaviour {
         }*/
     }
 	public void motionLevelLoad(){
-
-
-		SceneManager.LoadScene ("OpenBrush_Tango");
+        // We just want to reload the current scene to clear the artwork
+        Scene currentScene = SceneManager.GetActiveScene();
+		SceneManager.LoadScene (currentScene.name);
 
 
 
@@ -134,7 +136,7 @@ public class TangoCanvas : MonoBehaviour {
             // When the menu is shown, hide the painter and show the laser
             onScreenController.SetActive(false);
             GVRLaser.SetActive(true);
-            GVRVisual.SetActive(true);
+            //GVRVisual.SetActive(true);
             isMenuHidden = false;
         }
         else
@@ -143,7 +145,7 @@ public class TangoCanvas : MonoBehaviour {
             // When the menu is gone, show the painter and hide the laser
             onScreenController.SetActive(true);
             GVRLaser.SetActive(false);
-            GVRVisual.SetActive(false);
+            //GVRVisual.SetActive(false);
             isMenuHidden = true;
         }
     }
