@@ -10,11 +10,14 @@ public class TangoCanvas : MonoBehaviour {
     public GameObject GVRVisual;
     public GameObject GVRLaser;
     public bool isMenuHidden = false;
+    public GameObject mainGVRController;
+    public GameObject secondGVRController;
     
     private BrushManager brushScript;
     private PinchDraw pinchScript;
     private dLineManager dLineScript;
     private Canvas entireCanvas;
+    private GvrTrackedController mainGVRtrackedController;
 
 	// Use this for initialization
 	void Start () {
@@ -22,11 +25,10 @@ public class TangoCanvas : MonoBehaviour {
 	    pinchScript = (PinchDraw) onScreenController.GetComponent(typeof(PinchDraw));
         dLineScript = (dLineManager) onScreenController.GetComponent(typeof(dLineManager));
         entireCanvas = (Canvas)GetComponent(typeof(Canvas));
+        mainGVRtrackedController = (GvrTrackedController)mainGVRController.GetComponent(typeof(GvrTrackedController));
         
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		Brushson();
-        // Note this is a hack because I couldn't figure out where the code was reseting this transform elsewhere
-        //onScreenController.transform.parent.position = new Vector3(0,-1,0);
 
 
 
@@ -39,6 +41,7 @@ public class TangoCanvas : MonoBehaviour {
 	}
     void Update ()
     {
+        GvrControllerButton paintingButtons = GvrControllerButton.TouchPadButton | GvrControllerButton.Trigger | GvrControllerButton.Grip;
         //if (GvrControllerInputDevice.GetButtonDown(GvrControllerButton.App))
         if (GvrControllerInput.AppButtonDown)
         {
@@ -47,15 +50,18 @@ public class TangoCanvas : MonoBehaviour {
         }
 
         // Note that we're only going to be painting if the menu is hidden
-        if (isMenuHidden && GvrControllerInput.ClickButtonDown)
+        if (isMenuHidden && mainGVRtrackedController.ControllerInputDevice.GetButtonDown(paintingButtons))
         { 
             print("Start click Touchpad");
             brushScript.PaintingStart();
             pinchScript.paintStart();
             dLineScript.painterStart();
         }
+        if (mainGVRtrackedController.ControllerInputDevice.GetButtonDown(paintingButtons)) {
+            Debug.Log("got it");
+        }
         // Note that we're only going to be painting if the menu is hidden
-        if (isMenuHidden && GvrControllerInput.ClickButtonUp)
+        if (isMenuHidden && mainGVRtrackedController.ControllerInputDevice.GetButtonUp(paintingButtons))
         { 
             print("End click Touchpad");
             brushScript.PaintingEnd();
@@ -132,7 +138,12 @@ public class TangoCanvas : MonoBehaviour {
     public void toggleEntireCanvas(){
         if (isMenuHidden)
         {
-            entireCanvas.enabled = true;
+            // If the second controller is not active, we do want to show the big menu
+            // But we won't show the big menu in case we have two controllers (because then second hand is the palette hand)
+            if (!secondGVRController.activeInHierarchy)
+            {
+                entireCanvas.enabled = true;
+            }
             // When the menu is shown, hide the painter and show the laser
             onScreenController.SetActive(false);
             GVRLaser.SetActive(true);

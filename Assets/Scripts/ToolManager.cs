@@ -33,7 +33,7 @@ public class ToolManager : MonoBehaviour {
 	}
 	
 	void Awake () {
-		laser.SetActive (false);
+		//laser.SetActive (false);
 	}// Update is called once per frame
 	void Update () {
         //hacky will change
