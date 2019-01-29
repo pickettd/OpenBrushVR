@@ -4,7 +4,7 @@ using System.Collections;
 public class CanvasRot : MonoBehaviour {
 
 
-	#if UNITY_STANDALONE_WIN 
+	#if UNITY_STANDALONE
 	public SteamVR_TrackedObject controller;
 
 	#elif UNITY_ANDROID 

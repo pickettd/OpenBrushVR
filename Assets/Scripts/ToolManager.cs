@@ -13,7 +13,7 @@ public class ToolManager : MonoBehaviour {
 	public Text retexturetxt;
 
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE
 
 
 	public SteamVR_TrackedObject trackedObj;

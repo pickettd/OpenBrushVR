@@ -31,7 +31,7 @@ using System.Collections.Generic;
 	public DrawState[] _drawStates;
 
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE
 
 	public SteamVR_TrackedObject trackedObj;
 	public GameObject con;
@@ -187,7 +187,7 @@ using System.Collections.Generic;
       
     }
 
-	//#if UNITY_ANDROID || UNITY_IOS
+	#if UNITY_ANDROID || UNITY_IOS
 
 	public void paintStart(){
 		if (this.enabled == true) {
@@ -241,7 +241,7 @@ using System.Collections.Generic;
 	}
 
 
-	//#endif
+	#endif
 	public void pointerbreaker(){
 		
 		var drawState = _drawStates[0];

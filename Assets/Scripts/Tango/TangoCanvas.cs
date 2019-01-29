@@ -18,7 +18,7 @@ public class TangoCanvas : MonoBehaviour {
     private dLineManager dLineScript;
     private Canvas entireCanvas;
     private GvrTrackedController mainGVRtrackedController;
-
+#if UNITY_ANDROID || UNITY_IOS
 	// Use this for initialization
 	void Start () {
         brushScript = (BrushManager) BrushM.GetComponentInParent(typeof(BrushManager));
@@ -161,5 +161,5 @@ public class TangoCanvas : MonoBehaviour {
         }
     }
 
-
+#endif
 }

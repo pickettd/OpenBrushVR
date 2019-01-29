@@ -6,7 +6,7 @@ public class BrushManager : MonoBehaviour {
 	public static bool canpaint;
 	public static bool couldpaint;
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE
 
 
 	public SteamVR_TrackedObject controller;
@@ -262,7 +262,7 @@ public class BrushManager : MonoBehaviour {
 	}
 
 
-//#if UNITY_ANDROID || UNITY_IOS
+#if UNITY_ANDROID || UNITY_IOS
 
 
 
@@ -280,6 +280,6 @@ public class BrushManager : MonoBehaviour {
 	//	Debug.Log ("End");
 	}
 
-	//#endif
+#endif
 
 }
