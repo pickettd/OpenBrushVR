@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Daydream_6dof_beta.unity
-  isLoaded: 1
-  isActive: 1
